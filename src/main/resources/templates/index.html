@@ -11,24 +11,35 @@
         function init()
         {
             //fai una request con verbo get a /books
+            //la response JSON viene presa, messa nel parametro resp
+            //utilizzata per riempire la variabile books
+            // poi la grafichiamo
+            //la callback viene eseguita solo una volta che
+            //arriva la response
+            //il programma non non si ferma ad aspettare la response
+            //continua ad essere eseguito
+            //quando poi la response arriva esegue la callback
             $.getJSON('/books',(resp)=>
             {
-                console.log(resp);
+                console.log('RESPONSE ARRIVATA,ESEGUO CALLBACK')
                 books = resp;
-
                 let lista = $('#libri');
-
                 for(let b of books)
                     lista.append(`${b.title} <br/><br/>`)
             });
 
         }
 
+
+        function stampaBooks()
+        {
+            console.log(books);
+        }
     </script>
 </head>
 <body>
     <div id="libri"></div>
-
+    <button onclick="stampaBooks()">stampa in console </button>
     <script>init()</script>
 </body>
 </html>

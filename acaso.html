@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let variabile;
+
+        function dimostrazione() {
+
+            console.log('eseguo riga 12')
+            setTimeout(() => {
+                console.log('dopo 1000ms dalla riga 12 eseguo riga 13')
+                variabile = 'ciao'
+            }, 10000)
+
+            console.log('eseguo riga 18')
+            setTimeout(() => {
+                console.log('dopo 500 ms dalla riga 18 eseguo riga 19')
+                console.log(variabile)
+            }, 5000);
+        }
+         dimostrazione();
+        // function dimostrazione2() {
+        //
+        //     setTimeout(() => {
+        //         console.log('variabile riempita')
+        //         variabile = 'ciao'
+        //         setTimeout(() => {
+        //             console.log(variabile)
+        //         }, 5000);
+        //     }, 5000)
+        //
+        //
+        // }
+        // dimostrazione2();
+    </script>
+</head>
+<body>
+
+</body>
+</html>
