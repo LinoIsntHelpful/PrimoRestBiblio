@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script>
 
+
         let books;
 
         function init()
@@ -24,6 +25,7 @@
                 console.log('RESPONSE ARRIVATA,ESEGUO CALLBACK')
                 books = resp;
                 let lista = $('#libri');
+                lista.empty();
                 for(let b of books)
                     lista.append(`${b.title} <br/><br/>`)
             });
@@ -31,13 +33,65 @@
         }
 
 
+
         function stampaBooks()
         {
             console.log(books);
         }
+
+        function salvaPersona(event)
+        {
+            event.preventDefault();//con questo annullo il comportamento
+            //standard del submit, cioè il mandare la request
+
+            let nuovoLibro = {
+                title:$('#title').val(),
+                author:$('#author').val(),
+                genre:$('#genre').val(),
+            }
+            console.log(nuovoLibro)
+
+            let jsonLibro = JSON.stringify(nuovoLibro);//trasforma oggetto in json
+            console.log(jsonLibro)
+
+            //manda una request
+            $.ajax(
+                {
+                    url:'/books',
+                    method:'POST',
+                    data:jsonLibro,
+                    contentType:'application/json',
+                    //la callback
+                    success:()=>{
+                        //pulisco form
+                        $('#title').val('')
+                        $('#author').val('')
+                        $('#genre').val('')
+                        init();//rileggo tutto da db e rigrafico
+                    }
+                }
+            );
+
+        }
     </script>
 </head>
 <body>
+    <form onsubmit="salvaPersona(event)">
+        <input id="title" placeholder="title"><br/>
+        <input id="author" placeholder="author"><br/>
+        <select id="genre" >
+            <option value="">GENRE</option>
+            <option value="HORROR">HORROR</option>
+            <option value="FANTASY">FANTASY</option>
+            <option value="THRILLER">THRILLER</option>
+            <option value="DRAMA">DRAMA</option>
+            <option value="ROMANCE">ROMANCE</option>
+            <option value="COMEDY">COMEDY</option>
+            <option value="HISTORY">HISTORY</option>
+        </select><br/>
+        <input type="submit" value="save"><br/>
+    </form><br/>
+
     <div id="libri"></div>
     <button onclick="stampaBooks()">stampa in console </button>
     <script>init()</script>
