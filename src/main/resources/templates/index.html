@@ -9,8 +9,17 @@
 
         let books;
 
+        function esempioJquery()
+        {
+            //seleziono tutti gli elementi con classe paperino
+            $('.paperino')
+            //oppure mandiamo request
+        }
+
+
         function init()
         {
+
             //fai una request con verbo get a /books
             //la response JSON viene presa, messa nel parametro resp
             //utilizzata per riempire la variabile books
@@ -27,7 +36,7 @@
                 let lista = $('#libri');
                 lista.empty();
                 for(let b of books)
-                    lista.append(`${b.title} <br/><br/>`)
+                    lista.append(`${b.title} autore: ${b.author} <br/><br/>`)
             });
 
         }
@@ -44,20 +53,19 @@
             event.preventDefault();//con questo annullo il comportamento
             //standard del submit, cioè il mandare la request
 
-            let nuovoLibro = {
+            let nuovoLibro =
+            {
                 title:$('#title').val(),
                 author:$('#author').val(),
                 genre:$('#genre').val(),
             }
-            console.log(nuovoLibro)
-
             let jsonLibro = JSON.stringify(nuovoLibro);//trasforma oggetto in json
             console.log(jsonLibro)
 
             //manda una request
             $.ajax(
                 {
-                    url:'/books',
+                    url:'/books',//localhost:8080/books
                     method:'POST',
                     data:jsonLibro,
                     contentType:'application/json',
@@ -77,7 +85,7 @@
 </head>
 <body>
     <form onsubmit="salvaPersona(event)">
-        <input id="title" placeholder="title"><br/>
+        <input class="paperino" id="title" placeholder="title"><br/>
         <input id="author" placeholder="author"><br/>
         <select id="genre" >
             <option value="">GENRE</option>
@@ -93,7 +101,7 @@
     </form><br/>
 
     <div id="libri"></div>
-    <button onclick="stampaBooks()">stampa in console </button>
+    <button class="paperino" onclick="stampaBooks()">stampa in console </button>
     <script>init()</script>
 </body>
 </html>
